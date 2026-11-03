@@ -7,8 +7,8 @@ function App() {
   return (
     <>
       <header className=" flex bg-[#020202] justify-center align-middle">
-        <div className="w-1/3 items-start flex group text-[#f1c289]">
-          <BiMenu onClick={event => mostraMenu ? (setMostraMenu(false)) : (setMostraMenu(true))}  className="cursor-pointer ml-8 size-17 mt-2 hover:via-yellow-300 hover:to-amber-400 hover:shadow-[0_0_30px_rgba(251,191,36,0.8)] transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0" />
+        <div className="w-1/3 items-start flex group text-[#f1c289] hover:text-amber-200">
+          <BiMenu onClick={event => mostraMenu ? (setMostraMenu(false)) : (setMostraMenu(true))}  className="cursor-pointer ml-8 size-17 mt-2" />
         </div>
         <div className="w-1/3 flex justify-center">
           <img src="./logo.png" className="w-20 h-20 object-contain"></img>
