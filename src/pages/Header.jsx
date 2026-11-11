@@ -42,7 +42,12 @@ function App() {
                     </li>
           </ul>
         </div>
-      </header>    
+      </header>
+      <div className='items-center justify-center flex mt-30'>
+        <button className="px-6 py-3 bg-[#020202] border border-amber-500 text-[#f1c289] font-semibold rounded-lg shadow-md backdrop-blur-sm transition-all duration-300 hover:bg-black/70 hover:text-amber-200 hover:border-amber-400 hover:shadow-amber-500/20">
+          Clique Aqui
+        </button>
+      </div>   
     </>
   )
 }
