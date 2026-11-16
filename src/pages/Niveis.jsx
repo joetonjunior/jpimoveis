@@ -1,6 +1,6 @@
 import { App, Button, Drawer, Form, Input, Popconfirm, Table } from "antd";
 import { LuPencil, LuPlus, LuTrash2 } from "react-icons/lu";
-import { useBuscarNiveis, useCriarNivel } from "../hooks/niveisHooks";
+import { useBuscarNiveis, useCriarNivel, useDeletarNivel } from "../hooks/niveisHooks";
 import { useState } from "react";
 import FormItem from "antd/es/form/FormItem";
 
@@ -11,8 +11,30 @@ const Niveis = () => {
     const {data: niveis, isLoading: loadingNiveis} = useBuscarNiveis();
     const { mutate: criarNivel, isLoading: loadingCriar} = useCriarNivel();
 
+    const { mutate: deletarNivel } = useDeletarNivel();
+
     function criar(dados){
         criarNivel(dados,{
+            onSuccess: ({ type, description}) => {
+                setMostrarCriar(false);
+                notification[type]({
+                    description,
+                    placement: "bottomRight"
+                })
+
+            },
+            onError: ({ response: { data: { type, description } } }) => {
+                notification[type]({
+                    description,
+                    className: "bg-amber-200/50!"
+                });
+            }
+        })
+    }
+
+    function deletar(id){
+        console.log(id)
+        deletarNivel(id,{
             onSuccess: ({ type, description}) => {
                 setMostrarCriar(false);
                 notification[type]({
@@ -73,6 +95,7 @@ const Niveis = () => {
                                     description="Deseja realmente apagar este registro?"
                                     okText="Sim"
                                     cancelText="Não"
+                                    onConfirm={() => deletar(linha.id)}
                                 >
                                     <Button 
                                     icon={<LuTrash2 />}
