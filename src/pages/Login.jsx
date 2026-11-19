@@ -40,7 +40,7 @@ const Login = () => {
 
     return (
         <>
-            {tamanho > 780 ? (
+            {tamanho > 1080 ? (
                 <div className="relative h-170 bg-[#020202] flex flex-col items-center">
                     <img src="./banner.png" className="w-125 h-125 object-contain"></img>
                     <div className="absolute mt-100 w-125 p-4 bg-[#020202]">
