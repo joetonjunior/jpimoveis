@@ -6,7 +6,7 @@ import Niveis from "../pages/Niveis";
 import PageLayout from "../layouts/PageLayout";
 import { useContext } from "react";
 import { AdminContext } from "../contexts/AdminProvider";
-import ImoveisTipo from "../pages/imoveisTipo";
+import ImoveisTipo from "../pages/ImoveisTipo";
 import Locatarios from "../pages/Locatarios";
 import Usuarios from "../pages/Usuarios";
 
