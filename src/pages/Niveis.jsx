@@ -93,6 +93,11 @@ const Niveis = () => {
                     dataSource={niveis || []}
                     rowKey={"id"}
                     loading={loadingNiveis}
+                    pagination={{
+                          pageSize: 5, // Quantidade de itens por página (padrão é 10)
+                          showSizeChanger: false, // Mostra um seletor para mudar entre 10, 20, 50 itens
+                          showTotal: (total, range) => `${range[0]}-${range[1]} de ${total} níveis`, // Texto informativo
+                      }}
                 >
                     <Table.Column 
                         title="Nome"
