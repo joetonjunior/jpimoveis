@@ -114,8 +114,8 @@ const Locatarios = () => {
 
     return ( 
         <div>
-            <div className="flex justify-between items-center mb-4">
-                <h2 className="text-3xl font-bold">Locatários</h2>
+            <div className="flex flex-wrap gap-3 justify-between items-center mb-4">
+                <h2 className="text-2xl md:text-3xl font-bold">Locatários</h2>
                 <Button
                     type="primary"
                     icon={<LuPlus />}
@@ -131,6 +131,7 @@ const Locatarios = () => {
                 <Table
                     dataSource={locatarios || []}
                     rowKey={"id"}
+                    scroll={{ x: "max-content" }}
                     loading={loadingLocatarios}
                     pagination={{
                           pageSize: 5, // Quantidade de itens por página (padrão é 10)
