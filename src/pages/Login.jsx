@@ -41,9 +41,9 @@ const Login = () => {
     return (
         <>
             {tamanho > 1080 ? (
-                <div className="relative h-170 bg-[#020202] flex flex-col items-center">
-                    <img src="./banner.png" className="w-125 h-125 object-contain"></img>
-                    <div className="absolute mt-100 w-125 p-4 bg-[#020202]">
+                <div className="relative h-screen bg-[#020202] flex flex-col items-center">
+                    <img src="./logox.png" className="w-80 h-80 object-contain"></img>
+                    <div className="w-80 p-4 bg-[#020202]">
                         <Form
                             layout="vertical"
                             onFinish={logar}
