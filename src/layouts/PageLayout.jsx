@@ -1,53 +1,60 @@
-import { Outlet, useLocation } from "react-router";
+import { Outlet } from "react-router";
 import Menu from "../components/Menu";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BiMenu } from 'react-icons/bi';
 
 
 const PageLayout = () => {
     const [mostraMenu, setMostraMenu] = useState(false);
-    const localizacao = useLocation().pathname;
+
+    // fecha o menu com a tecla Esc
+    useEffect(() => {
+        const aoTeclar = (e) => e.key === "Escape" && setMostraMenu(false);
+        window.addEventListener("keydown", aoTeclar);
+        return () => window.removeEventListener("keydown", aoTeclar);
+    }, []);
+
     return (
-        <>
-            <header className="h-21">
-                <div className=" flex bg-[#020202] justify-center align-middle">
-                    <div className="w-1/3 items-start flex group text-[#f1c289] hover:text-amber-200">
-                        <BiMenu onClick={event => mostraMenu ? (setMostraMenu(false)) : (setMostraMenu(true))} className="cursor-pointer ml-8 size-17 mt-2" />
+        <div className="min-h-screen flex flex-col bg-gray-50">
+            <header className="sticky top-0 z-20">
+                <div className="flex bg-[#020202] items-center h-16 md:h-20 px-3 md:px-8">
+                    <div className="w-1/3 flex text-[#f1c289] hover:text-amber-200">
+                        <button
+                            type="button"
+                            aria-label="Abrir menu"
+                            onClick={() => setMostraMenu(!mostraMenu)}
+                            className="cursor-pointer"
+                        >
+                            <BiMenu className="size-10 md:size-14" />
+                        </button>
                     </div>
                     <div className="w-1/3 flex justify-center">
-                        <img src="../logox.png" className="w-20 h-20 cursor-pointer object-contain"></img>
+                        <img src="/logox.png" alt="JP Imóveis" className="w-14 h-14 md:w-20 md:h-20 object-contain" />
                     </div>
                     <div className="w-1/3"></div>
                 </div>
                 <div className="w-full h-1 bg-linear-to-b from-[#f6e2a4] to-[#b26f1f]"></div>
-                <div
-                    className={
-                        mostraMenu
-                            ? "border-2 border-red-200 flex duration-200 fixed w-full h-full z-30"
-                            : "hidden opacity-0 invisible duration-200"
-                    }
-                >
-                    <div
-                        id="overlay"
-                        onClick={() => setMostraMenu(false)}
-                        className="w-full h-screen bg-[#292625]/70 fixed top-0 left-0 z-10 duration-200"
-                    />
-                    <div onClick={() => setMostraMenu(false)} className="relative z-20 duration-200">
-                        <Menu />
-                    </div>
-                </div>
             </header>
-            {localizacao == '/painel' ? (
-                <div className="flex-1 overflow-auto">
-                    <Outlet />
-                </div>
-            ) : (
-                <div className="flex-1 overflow-auto p-4">
-                    <Outlet />
-                </div>
-            )}
 
-        </>
+            {/* Menu lateral (abre por cima do conteúdo em qualquer tamanho de tela) */}
+            <div
+                className={`fixed inset-0 z-30 transition-opacity duration-200 ${mostraMenu ? "opacity-100 visible" : "opacity-0 invisible"}`}
+            >
+                <div onClick={() => setMostraMenu(false)} className="absolute inset-0 bg-[#292625]/70" />
+                <div
+                    onClick={() => setMostraMenu(false)}
+                    className={`relative h-full w-fit transition-transform duration-200 ${mostraMenu ? "translate-x-0" : "-translate-x-full"}`}
+                >
+                    <Menu />
+                </div>
+            </div>
+
+            <main className="flex-1">
+                <div className="p-3 sm:p-4 md:p-6">
+                    <Outlet />
+                </div>
+            </main>
+        </div>
     )
 }
 

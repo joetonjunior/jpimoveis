@@ -75,8 +75,8 @@ const ImoveisTipo = () => {
 
     return ( 
         <div>
-            <div className="flex justify-between items-center mb-4">
-                <h2 className="text-3xl font-bold">Tipos de Imóveis</h2>
+            <div className="flex flex-wrap gap-3 justify-between items-center mb-4">
+                <h2 className="text-2xl md:text-3xl font-bold">Tipos de Imóveis</h2>
                 <Button
                     type="primary"
                     icon={<LuPlus />}
@@ -92,6 +92,7 @@ const ImoveisTipo = () => {
                 <Table
                     dataSource={tipos || []}
                     rowKey={"id"}
+                    scroll={{ x: "max-content" }}
                     loading={loadingImoveisTipo}
                     pagination={{
                           pageSize: 5, // Quantidade de itens por página (padrão é 10)
