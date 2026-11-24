@@ -110,6 +110,11 @@ const Usuarios = () => {
                     dataSource={usuarios || []}
                     rowKey={"id"}
                     loading={loadingUsuarios}
+                    pagination={{
+                          pageSize: 5, // Quantidade de itens por página (padrão é 10)
+                          showSizeChanger: false, // Mostra um seletor para mudar entre 10, 20, 50 itens
+                          showTotal: (total, range) => `${range[0]}-${range[1]} de ${total} usuarios`, // Texto informativo
+                      }}
                 >
                     <Table.Column
                         title="Nome"
