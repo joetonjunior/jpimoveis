@@ -30,6 +30,7 @@ const Usuarios = () => {
 
     const [formEditar] = Form.useForm();
     const [formCriar] = Form.useForm();
+    const [tamanho, setTamanho] = useState(window.innerWidth);
 
     function criar(dados) {
         criarUsuarios(dados, {
@@ -106,7 +107,8 @@ const Usuarios = () => {
                 >Novo usuário</Button>
             </div>
             <div>
-                <Table
+                {tamanho > 500 ? (
+                     <Table
                     dataSource={usuarios || []}
                     rowKey={"id"}
                     scroll={{ x: "max-content" }}
@@ -117,6 +119,7 @@ const Usuarios = () => {
                           showTotal: (total, range) => `${range[0]}-${range[1]} de ${total} usuarios`, // Texto informativo
                       }}
                 >
+                    
                     <Table.Column
                         title="Nome"
                         render={(_, linha) => (
@@ -126,6 +129,7 @@ const Usuarios = () => {
                         </div>
                           )}
                     />
+                    
                     <Table.Column
                         title="Nível"
                         dataIndex={["nivel", "nome"]}
@@ -170,6 +174,69 @@ const Usuarios = () => {
                         )}
                     />
                 </Table>
+                ) : ( <Table
+                    dataSource={usuarios || []}
+                    rowKey={"id"}
+                    scroll={{ x: "max-content" }}
+                    loading={loadingUsuarios}
+                    pagination={{
+                          pageSize: 5, // Quantidade de itens por página (padrão é 10)
+                          showSizeChanger: false, // Mostra um seletor para mudar entre 10, 20, 50 itens
+                          showTotal: (total, range) => `${range[0]}-${range[1]} de ${total} usuarios`, // Texto informativo
+                      }}
+                >
+                    
+                    <Table.Column
+                        title="Nome"
+                        render={(_, linha) => (
+                        <div className="min-w-48 max-w-80">
+                            <div className="font-medium">{linha.nome}</div>
+                            <div className="text-xs text-gray-500">{linha.email}</div>
+                        </div>
+                          )}
+                    />
+                    
+                    <Table.Column
+                        title="Ações"
+                        className="w-25"
+                        render={(_, linha) => (
+                            <div className="flex gap-2">
+                                <Button
+                                    icon={<LuPencil />}
+                                    onClick={() => {
+                                        // formEditar.setFieldValue("id", linha.id);
+                                        // formEditar.setFieldValue("nome", linha.nome);
+                                        formEditar.setFieldsValue(linha);
+                                        setMostrarEditar(true);
+                                    }}
+                                    style={{
+                                        backgroundColor: '#020202',
+                                        color: '#f1c289',
+                                        borderColor: '#f1c289',
+                                    }}
+                                />
+                                <Popconfirm
+                                    title="Aviso:"
+                                    description="Deseja realmente apagar este registro?"
+                                    okText="Sim"
+                                    cancelText="Não"
+                                    onConfirm={() => deletar(linha.id)}
+                                >
+                                    <Button
+                                        icon={<LuTrash2 />}
+                                        style={{
+                                            backgroundColor: '#020202',
+                                            color: '#f1c289',
+                                            borderColor: '#f1c289',
+                                        }}
+                                    />
+
+                                </Popconfirm>
+                            </div>
+                        )}
+                    />
+                </Table>)}
+               
             </div>
             <Drawer
                 title="Criar Usuário"
