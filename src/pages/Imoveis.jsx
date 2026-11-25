@@ -9,6 +9,8 @@ import ImovelForm from "../components/ImovelForm";
 import useTelaPequena from "../hooks/useTelaPequena";
 import { enderecoCompleto, formatarMoeda, notificar, notificarErro } from "../utils/formatadores";
 
+
+
 const estiloBotao = { backgroundColor: "#020202", color: "#f1c289", borderColor: "#f1c289" };
 
 const estiloDrawer = {
@@ -41,6 +43,8 @@ const Imoveis = () => {
     const [busca, setBusca] = useState("");
     const { notification } = App.useApp();
     const telaPequena = useTelaPequena();
+    //verifica tamanho da tela para melhorar a responsividade
+    const [celular, setCelular] = useState(window.innerWidth);
 
     const { data: imoveis, isLoading: loadingImoveis } = useBuscarImoveis("?tipo=true&locatario=true");
     const { data: tipos } = useBuscarImoveisTipo();
@@ -143,7 +147,7 @@ const Imoveis = () => {
             >
                 <Table.Column
                     title="Foto"
-                    responsive={["sm"]}
+                    responsive={["md"]}
                     render={(_, linha) => linha.imagem ? (
                         <Image width={80} height={60} className="object-cover rounded" src={APIurl + linha.imagem} />
                     ) : (
@@ -161,9 +165,11 @@ const Imoveis = () => {
                         </div>
                     )}
                 />
+  
                 <Table.Column
                     title="Aluguel"
                     align="right"
+                    responsive={["md"]}
                     sorter={(a, b) => (a.valor_aluguel || 0) - (b.valor_aluguel || 0)}
                     render={(_, linha) => <span className="whitespace-nowrap">{formatarMoeda(linha.valor_aluguel)}</span>}
                 />
@@ -174,6 +180,7 @@ const Imoveis = () => {
                 <Table.Column
                     title="Locatário"
                     align="center"
+                    responsive={["md"]}
                     render={(_, linha) => linha.locatarios
                         ? <span className="whitespace-nowrap">{linha.locatarios.nome}</span>
                         : <Tag color="gold">Disponível</Tag>}

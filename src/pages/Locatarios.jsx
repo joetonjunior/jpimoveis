@@ -141,11 +141,12 @@ const Locatarios = () => {
                 >
                     <Table.Column 
                         title="Nome"
-                        dataIndex="nome"
-                    />
-                    <Table.Column 
-                        title="cpf_cnpj"
-                        dataIndex="cpf_cnpj"
+                        render={(_, linha) => (
+                        <div className="min-w-48 max-w-80">
+                            <div className="font-medium">{linha.nome}</div>
+                            <div className="text-xs text-gray-500">{linha.cpf_cnpj}</div>
+                        </div>
+                    )}
                     />
                     <Table.Column 
                         title="Telefone"
