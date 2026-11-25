@@ -58,8 +58,14 @@ export const useCriarImoveis = () => {
 
 export const useEditarImoveis = () => {
     return useMutation({
-        mutationFn: async ({ id, ...dados }) => {
-            const res = await AXIOS.put(`/imoveis/${id}`, dados);
+        mutationFn: async ({ id, arquivo, ...campos }) => {
+            const formData = new FormData();
+            Object.entries(campos).forEach(([chave, valor]) => {
+                formData.append(chave, valor === null || valor === undefined ? "" : valor);
+            });
+            if (arquivo instanceof File) formData.append("imagem", arquivo);
+
+            const res = await AXIOS.put(`/imoveis/${id}`, formData);
             return res.data;
         },
         onSuccess: () => {

@@ -93,7 +93,9 @@ const Imoveis = () => {
     }
 
     function editar(valores) {
-        editarImoveis(montarDadosEdicao(valores), {
+        const { imagem, ...campos } = valores;
+        const arquivo = imagem?.[0]?.originFileObj;
+        editarImoveis({ ...montarDadosEdicao(campos), arquivo }, {
             onSuccess: (resposta) => {
                 notificar(notification, resposta);
                 if (resposta?.type === "success") setImovelEditando(null);

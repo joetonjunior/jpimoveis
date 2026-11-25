@@ -34,7 +34,7 @@ const Inteiro = (props) => <InputNumber {...props} min={0} precision={0} classNa
 /**
  * Formulário de imóvel usado tanto para criar quanto para editar.
  * - modo "criar": pede a imagem (obrigatória na API)
- * - modo "editar": mostra a imagem atual (a API não troca imagem na edição)
+ * - modo "editar": permite substituir opcionalmente a imagem atual
  */
 const ImovelForm = ({ form, modo, onFinish, loading, tipos, locatarios, imagemAtual }) => {
     const [buscandoCEP, setBuscandoCEP] = useState(false);
@@ -218,14 +218,41 @@ const ImovelForm = ({ form, modo, onFinish, loading, tipos, locatarios, imagemAt
                     </Upload>
                 </Form.Item>
             ) : (
-                <div className="mb-4">
+                <>
+                    <Form.Item
+                        name="imagem"
+                        valuePropName="fileList"
+                        getValueFromEvent={(e) => (Array.isArray(e) ? e : e?.fileList)}
+                        rules={[
+                            {
+                                validator: (_, lista) => {
+                                    const arquivo = lista?.[0]?.originFileObj;
+                                    if (arquivo && arquivo.size > 5 * 1024 * 1024) {
+                                        return Promise.reject(new Error("A imagem deve ter no máximo 5 MB"));
+                                    }
+                                    return Promise.resolve();
+                                },
+                            },
+                        ]}
+                    >
+                        <Upload
+                            listType="picture"
+                            maxCount={1}
+                            accept="image/jpeg,image/png,image/webp"
+                            beforeUpload={() => false}
+                        >
+                            <Button icon={<LuUpload />}>Escolher nova imagem</Button>
+                        </Upload>
+                    </Form.Item>
                     {imagemAtual ? (
-                        <Image src={APIurl + imagemAtual} width={160} className="rounded object-cover" />
+                        <div className="mb-4">
+                            <Image src={APIurl + imagemAtual} width={160} className="rounded object-cover" />
+                            <p className="text-[#f1c289]/60 text-xs mt-2">Foto atual</p>
+                        </div>
                     ) : (
-                        <p className="text-[#f1c289]/60 text-sm">Imóvel sem foto.</p>
+                        <p className="text-[#f1c289]/60 text-sm mb-4">Imóvel sem foto.</p>
                     )}
-                    <p className="text-[#f1c289]/60 text-xs mt-2">A troca de foto ainda não é suportada pela API.</p>
-                </div>
+                </>
             )}
 
             <div className="flex justify-end">
