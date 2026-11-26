@@ -3,14 +3,11 @@ import { NavLink } from "react-router";
 import { LuLogOut } from "react-icons/lu";
 import { AdminContext } from "../contexts/AdminProvider";
 
-const NIVEL_ADMIN = '1e088d37-943d-4cba-a7e0-457fed7f6298';
-
 const estiloNav = "flex flex-col *:border-amber-500 *:text-center *:w-40 *:leading-10 *:font-semibold *:text-[#f1c289]! *:hover:bg-amber-200/25! gap-4 md:gap-6 mt-4 *:text-xl md:*:text-2xl *:rounded *:duration-200! *:[&.active]:border-amber-500! *:[&.active]:border-2! *:[&.active]:text-amber-200!";
 
 const Menu = () => {
     const { logout } = useContext(AdminContext);
-    const usuario = JSON.parse(sessionStorage.getItem("usuario") || "{}");
-    const ehAdmin = usuario?.nivel_id == NIVEL_ADMIN;
+    const ehAdmin = sessionStorage.getItem("acesso") === "true";
 
     return (
         <aside className="w-56 h-full overflow-y-auto bg-[#020202] p-4 flex flex-col items-center">

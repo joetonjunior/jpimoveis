@@ -4,6 +4,8 @@ import { useContext } from "react";
 import { useNavigate } from "react-router";
 import { AdminContext } from "../contexts/AdminProvider";
 
+const acesso = "true";
+
 const Login = () => {
     const navigate = useNavigate();
 
@@ -22,6 +24,11 @@ const Login = () => {
                 if (type == "success") {
                     sessionStorage.setItem("token", token);
                     sessionStorage.setItem("usuario", JSON.stringify(usuario));
+                    if (usuario.acesso === "true") {
+                        sessionStorage.setItem("acesso", acesso);
+                    } else {
+                        sessionStorage.removeItem("acesso");
+                    }
                     setToken(token)
                     navigate("/painel");
                 }

@@ -144,7 +144,10 @@ const Usuarios = () => {
                                     onClick={() => {
                                         // formEditar.setFieldValue("id", linha.id);
                                         // formEditar.setFieldValue("nome", linha.nome);
-                                        formEditar.setFieldsValue(linha);
+                                        formEditar.setFieldsValue({
+                                            ...linha,
+                                            nivel_id: linha.nivel_id ?? linha.nivel?.id,
+                                        });
                                         setMostrarEditar(true);
                                     }}
                                     style={{
@@ -206,7 +209,10 @@ const Usuarios = () => {
                                     onClick={() => {
                                         // formEditar.setFieldValue("id", linha.id);
                                         // formEditar.setFieldValue("nome", linha.nome);
-                                        formEditar.setFieldsValue(linha);
+                                        formEditar.setFieldsValue({
+                                            ...linha,
+                                            nivel_id: linha.nivel_id ?? linha.nivel?.id,
+                                        });
                                         setMostrarEditar(true);
                                     }}
                                     style={{
