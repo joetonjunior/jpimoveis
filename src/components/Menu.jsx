@@ -16,7 +16,7 @@ const Menu = () => {
         <aside className="w-56 h-full overflow-y-auto bg-[#020202] p-4 flex flex-col items-center">
             <img src="/logox.png" alt="JP Imóveis" className="w-28 h-28 md:w-40 md:h-40 object-contain" />
             <nav className={estiloNav}>
-                <NavLink end to="/painel">Home</NavLink>
+                <NavLink end to="/painel">Dashboard</NavLink>
                 <NavLink end to="/painel/imoveis">Imóveis</NavLink>
                 <NavLink end to="/painel/locatarios">Locatários</NavLink>
                 {ehAdmin && (
